@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_project/test_veri.dart';
 import 'constant.dart';
 
 void main() {
@@ -12,27 +13,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   List<Widget> secimler = [];
-
-  List<Soru> sorubankasi = [
-    Soru(
-        soruMetni: 'Titanic gelmiş geçmiş en büyük gemidir', soruYaniti: false),
-    Soru(
-        soruMetni: 'Dünyadaki tavuk sayısı insan sayısından fazladır',
-        soruYaniti: true),
-    Soru(soruMetni: 'Kelebeklerin ömrü bir gündür', soruYaniti: false),
-    Soru(soruMetni: 'Dünya düzdür', soruYaniti: false),
-    Soru(
-        soruMetni: 'Kaju fıstığı aslında bir meyvenin sapıdır',
-        soruYaniti: true),
-    Soru(
-        soruMetni: 'Kaju fıstığı aslında bir meyvenin sapıdır',
-        soruYaniti: true),
-    Soru(
-        soruMetni: 'Fatih Sultan Mehmet hiç patates yememiştir',
-        soruYaniti: true)
-  ];
-
-  int soru_index = 0;
+  TestVeri test_1 = TestVeri();
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +28,7 @@ class _MyAppState extends State<MyApp> {
                   flex: 5,
                   child: Center(
                       child: Text(
-                    sorular[soru_index],
+                    test_1.getSoruMetni(),
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ))),
@@ -74,10 +55,10 @@ class _MyAppState extends State<MyApp> {
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    cevaplar[soru_index] == false
+                                    test_1.getSoruYaniti() == false
                                         ? secimler.add(dogruiconu)
                                         : secimler.add(yanlisiconu);
-                                    soru_index++;
+                                    test_1.sonrakisoru();
                                   });
                                 },
                               ))),
@@ -91,10 +72,10 @@ class _MyAppState extends State<MyApp> {
                                 child: Icon(Icons.thumb_up, size: 30.0),
                                 onPressed: () {
                                   setState(() {
-                                    cevaplar[soru_index] == true
+                                    test_1.getSoruYaniti() == true
                                         ? secimler.add(dogruiconu)
                                         : secimler.add(yanlisiconu);
-                                    soru_index++;
+                                    test_1.sonrakisoru();
                                   });
                                 },
                               ))),
@@ -106,11 +87,4 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-}
-
-class Soru {
-  String soruMetni;
-  bool soruYaniti;
-
-  Soru({@required this.soruMetni, @required this.soruYaniti});
 }

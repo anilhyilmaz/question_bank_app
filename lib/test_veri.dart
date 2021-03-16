@@ -1,7 +1,7 @@
 import 'package:test_project/soru.dart';
 
 class TestVeri {
-  int _soru_index = 0;
+  int _soruIndex = 0;
 
   List<Soru> _sorubankasi = [
     Soru(
@@ -22,21 +22,28 @@ class TestVeri {
         soruYaniti: true)
   ];
   String getSoruMetni() {
-    if (_soru_index < 5) {
-      return _sorubankasi[_soru_index].soruMetni;
-    } else {
-      _soru_index = 0;
-      return _sorubankasi[_soru_index].soruMetni;
-    }
+    return _sorubankasi[_soruIndex].soruMetni;
   }
 
   bool getSoruYaniti() {
-    return _sorubankasi[_soru_index].soruYaniti;
+    return _sorubankasi[_soruIndex].soruYaniti;
   }
 
   void sonrakisoru() {
-    if (_soru_index < _sorubankasi.length - 1) {
-      _soru_index++;
+    if (_soruIndex + 1 < _sorubankasi.length) {
+      _soruIndex++;
     }
+  }
+
+  bool testBittiMi() {
+    if (_soruIndex + 1 >= _sorubankasi.length) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void testisifirla() {
+    _soruIndex = 0;
   }
 }

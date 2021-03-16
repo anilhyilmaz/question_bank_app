@@ -3,7 +3,7 @@ import 'package:test_project/test_veri.dart';
 import 'constant.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -14,6 +14,39 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   List<Widget> secimler = [];
   TestVeri test_1 = TestVeri();
+  void butonFonksiyonu(bool secilenButon) {
+    if (test_1.testBittiMi() == true) {
+      //alert dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Test Bitmiştir"),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              new FlatButton(
+                  onPressed: () {
+                    setState(() {
+                      test_1.testisifirla();
+                      secimler = [];
+                    });
+                    Navigator.of(context).pop();
+                  },
+                  child: new Text('Başa Dön')),
+            ],
+          );
+        },
+      );
+    } else {
+      setState(() {
+        test_1.getSoruYaniti() == secilenButon
+            ? secimler.add(dogruiconu)
+            : secimler.add(yanlisiconu);
+        test_1.sonrakisoru();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,12 +87,7 @@ class _MyAppState extends State<MyApp> {
                                   size: 30.0,
                                 ),
                                 onPressed: () {
-                                  setState(() {
-                                    test_1.getSoruYaniti() == false
-                                        ? secimler.add(dogruiconu)
-                                        : secimler.add(yanlisiconu);
-                                    test_1.sonrakisoru();
-                                  });
+                                  butonFonksiyonu(false);
                                 },
                               ))),
                       Expanded(
@@ -71,12 +99,7 @@ class _MyAppState extends State<MyApp> {
                                 color: Colors.green[400],
                                 child: Icon(Icons.thumb_up, size: 30.0),
                                 onPressed: () {
-                                  setState(() {
-                                    test_1.getSoruYaniti() == true
-                                        ? secimler.add(dogruiconu)
-                                        : secimler.add(yanlisiconu);
-                                    test_1.sonrakisoru();
-                                  });
+                                  butonFonksiyonu(true);
                                 },
                               ))),
                     ])),
